@@ -2,7 +2,7 @@
 //  InTimeUITests.swift
 //  InTimeUITests
 //
-//  Created by Dana Buca on 08.08.2022.
+//  Created by Dana Buca on 05/11/2020.
 //
 
 import XCTest
@@ -27,11 +27,12 @@ class InTimeUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
+        // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
             // This measures how long it takes to launch your application.
             measure(metrics: [XCTApplicationLaunchMetric()]) {
                 XCUIApplication().launch()
