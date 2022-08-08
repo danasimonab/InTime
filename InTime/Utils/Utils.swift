@@ -8,7 +8,7 @@
 import Foundation
 
 
-class Utils : NSObject{
+class Utils : NSObject  {
     
     
     class func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
