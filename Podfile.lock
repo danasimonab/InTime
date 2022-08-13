@@ -1,0 +1,16 @@
+PODS:
+  - LMGaugeViewSwift (1.0.0)
+
+DEPENDENCIES:
+  - LMGaugeViewSwift
+
+SPEC REPOS:
+  trunk:
+    - LMGaugeViewSwift
+
+SPEC CHECKSUMS:
+  LMGaugeViewSwift: 049e8550417b3b00c67f396103c52fb3730550bf
+
+PODFILE CHECKSUM: 19b4a810761965e44a07b05429d140a2e8d7e91e
+
+COCOAPODS: 1.11.3

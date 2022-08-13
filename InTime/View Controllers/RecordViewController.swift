@@ -8,10 +8,16 @@
 import UIKit
 import CoreLocation
 import CoreData
-class RecordViewController: UIViewController , CLLocationManagerDelegate, UITextFieldDelegate{
+import LMGaugeViewSwift
+class RecordViewController: UIViewController , CLLocationManagerDelegate, UITextFieldDelegate, GaugeViewDelegate{
+  
+    var timeDelta: Double = 1.0/24
+    var velocity: Double = 0
+    var acceleration: Double = 5
+    
+    @IBOutlet weak var gaugeView: GaugeView!
     
     @IBOutlet weak var currentSpeedLabel: UILabel!
-    @IBOutlet weak var currentSpeedValueLabel: UILabel!
     @IBOutlet weak var startSpeedLbl: UILabel!
     @IBOutlet weak var startSpeedTextField: UITextField!
     @IBOutlet weak var endSpeedTextField: UITextField!
@@ -19,8 +25,7 @@ class RecordViewController: UIViewController , CLLocationManagerDelegate, UIText
     @IBOutlet weak var recordButton: UIButton!
     
     @IBOutlet weak var timeLabel: UILabel!
-    
-   // var speedResultModel : SpeedResultModel = SpeedResultModel()
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     let locationManager = CLLocationManager()
    
@@ -28,24 +33,68 @@ class RecordViewController: UIViewController , CLLocationManagerDelegate, UIText
     
     var timer:Timer!
     var currentSpeed = 0
-    var currentSpeed1 = 14.00
     var counter = 0
-    
-    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //deleteAllRecords()
+        
+        let screenMinSize = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+        let ratio = Double(screenMinSize)/320
+        self.gaugeView.delegate = self
+        gaugeView.divisionsRadius = 1.25 * ratio
+        gaugeView.subDivisionsRadius = (1.25 - 0.5) * ratio
+        gaugeView.ringThickness = 16 * ratio
+        gaugeView.valueFont = UIFont(name: GaugeView.defaultFontName, size: CGFloat(140 * ratio))!
+        gaugeView.unitOfMeasurementFont = UIFont(name: GaugeView.defaultFontName, size: CGFloat(16 * ratio))!
+        gaugeView.minMaxValueFont = UIFont(name: GaugeView.defaultMinMaxValueFont, size: CGFloat(12 * ratio))!
+        
+        // Update gauge view
+        gaugeView.minValue = 0
+        gaugeView.maxValue = 240
+        gaugeView.limitValue = 50
+        
         self.locationManager .delegate = self
         self.startSpeedTextField.delegate = self
         self.endSpeedTextField.delegate  =  self
         self.locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager .startUpdatingLocation()
+        self.refreshButton.isEnabled = false
+        
+        Timer.scheduledTimer(timeInterval: timeDelta,
+                             target: self,
+                             selector: #selector(updateGaugeTimer),
+                             userInfo: nil,
+                             repeats: true)
       
        
     }
+    
+    @objc func updateGaugeTimer(timer: Timer) {
+        // Set value for gauge view
+        gaugeView.value = Double(currentSpeed)
+    }
+    
+    @IBAction func refreshAction(_ sender: Any) {
+        timer.invalidate()
+        self.refreshButton.isEnabled = false
+        self.counter = 0;
+        self.recordButton.alpha = 1.0;
+        self.timeLabel.text = "00:00:00";
+        
+    }
+    
+    func ringStokeColor(gaugeView: GaugeView, value: Double) -> UIColor {
+        if value >= gaugeView.limitValue {
+            return UIColor(red: 51/255, green: 175.0/255, blue: 161.0/255, alpha: 1)
+        }
+        
+        return UIColor(red: 51.0/255, green: 175.0/255, blue: 161.0/255, alpha: 1)
+    }
+    
+    
     
     func deleteAllRecords() {
             //delete all data
@@ -76,10 +125,7 @@ class RecordViewController: UIViewController , CLLocationManagerDelegate, UIText
         loc = locations.first!
         let speed = locations.first?.speed;
         currentSpeed = Int(Int(speed! * 3.6))
-
-        currentSpeedValueLabel.text = "\(Int(Int(speed! * 3.6))) km/h"
-      //  NSLog("speed = ", String (format: "%i", speed!));
-       
+   
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
       print("\(error.localizedDescription)")
@@ -92,25 +138,21 @@ class RecordViewController: UIViewController , CLLocationManagerDelegate, UIText
     func printSecondsToHoursMinutesSeconds (seconds:Int) -> (String) {
         let (h, m, s) = secondsToHoursMinutesSeconds (seconds: seconds)
         print ("\(h) Hours, \(m) Minutes, \(s) Seconds")
-        let stringToShow = ("\(h) Hours, \(m) Minutes, \(s) Seconds")
+        let stringToShow = ("\(h):\(m):\(s)")
         return stringToShow
       
     }
     
     @IBAction func recordAction(_ sender: Any) {
         print("test");
-     //   self.timer.invalidate()
-     //   let value = startSpeedTextField.text ?? "0";
-     //   let c = currentSpeed//Int(Int(speed! * 3.6));//currentSpeedValueLabel.text ?? "0";
-       // if(Int(c) == Int(value) ){
-            self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true);
-        
-       // }
-        
+
+        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true);
+
     }
     
     @objc func startTimer(){
         recordButton.alpha = 0.5;
+        self.refreshButton.isEnabled = true
         let startSpeed = startSpeedTextField.text ?? "0";
         let endSpeed = endSpeedTextField.text ?? "0";
         let c1 = currentSpeed
@@ -118,20 +160,17 @@ class RecordViewController: UIViewController , CLLocationManagerDelegate, UIText
         if(!startSpeed.isEmpty  && !endSpeed.isEmpty){
             if(Int(c1) >= Int(startSpeed) ?? 0  ){
                 counter += 1;
-                timeLabel.text = "The time is: \(printSecondsToHoursMinutesSeconds(seconds: counter))"//"\(counter)";
+                timeLabel.text = "\(printSecondsToHoursMinutesSeconds(seconds: counter))"
             } else {
                 counter = 0;
-                timeLabel.text = "The time is: \(printSecondsToHoursMinutesSeconds(seconds: counter))"//"\(counter)";
+                timeLabel.text = "\(printSecondsToHoursMinutesSeconds(seconds: counter))"
             }
             
             let value = endSpeedTextField.text ?? "0";
-            let c = currentSpeed//currentSpeedValueLabel.text ?? "0"
+            let c = currentSpeed
             if(Int(c) == Int(value) ){
                 timer.invalidate()
-                //            speedResult.start = Int(startSpeedTextField.text ?? "0")
-                //            speedResult.end = Int(endSpeedTextField.text ?? "0")
-                //            speedResult.time = counter
-                //
+
                 let dialogMessage = UIAlertController(title: "Congrats", message: "The time is: \(printSecondsToHoursMinutesSeconds(seconds: counter))", preferredStyle: .alert)
                 
                 // Create OK button with action handler
@@ -156,6 +195,8 @@ class RecordViewController: UIViewController , CLLocationManagerDelegate, UIText
                     
                     self.counter = 0;
                     self.recordButton.alpha = 1.0;
+                    self.timeLabel.text = "00:00:00";
+                    self.refreshButton.isEnabled = false
                     
                 })
                 

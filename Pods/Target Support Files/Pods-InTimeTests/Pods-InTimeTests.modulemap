@@ -1,0 +1,6 @@
+framework module Pods_InTimeTests {
+  umbrella header "Pods-InTimeTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
