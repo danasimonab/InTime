@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-class History2ViewController: UIViewController {
+class HistoryViewController: UIViewController {
     
 
     @IBOutlet weak var containerView : UIView!

@@ -213,15 +213,17 @@ class RecordViewController: UIViewController , CLLocationManagerDelegate, UIText
             let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
                 print("Ok button tapped")
                 self.recordButton.alpha = 1.0;
+                
             })
             
             //Add OK button to a dialog message
             dialogMessage.addAction(ok)
             // Present Alert to
             self.present(dialogMessage, animated: true, completion: nil)
+            self.timer.invalidate()
+            self.refreshButton.isEnabled = false
             
         }
-        // timer.invalidate()
-        
+
     }
 }

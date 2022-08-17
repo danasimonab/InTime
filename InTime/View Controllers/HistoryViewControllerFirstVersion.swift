@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class HistoryViewController: UITableViewController {
+class HistoryViewControllerFirstVersion: UITableViewController {
     
    
     @IBOutlet var historyTableView: UITableView!

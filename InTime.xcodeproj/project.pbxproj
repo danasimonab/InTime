@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,7 +20,7 @@
 		8F7C8C8D2554709300BA6A10 /* InTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C8C8C2554709300BA6A10 /* InTimeTests.swift */; };
 		8F7C8C982554709300BA6A10 /* InTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C8C972554709300BA6A10 /* InTimeUITests.swift */; };
 		8F7C8D662559D90600EE0DDA /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C8D652559D90600EE0DDA /* RecordViewController.swift */; };
-		8F8419DA2893F603003EF8FB /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8419D92893F603003EF8FB /* HistoryViewController.swift */; };
+		8FB964C628AD227D0043265C /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB964C528AD227D0043265C /* HistoryViewController.swift */; };
 		AF3A3A38661AFAC9D8B3198C /* Pods_InTimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB9BC1C1FACE790F54B3B3 /* Pods_InTimeTests.framework */; };
 		E87E3E2ABFA90843CC488A68 /* Pods_InTime_InTimeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0140EDEE4E019D6B33B86F4D /* Pods_InTime_InTimeUITests.framework */; };
 		F4D3B5C249FF539D61B67928 /* Pods_InTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F81AF2E751EB3CFFE2777E3 /* Pods_InTime.framework */; };
@@ -67,7 +67,7 @@
 		8F7C8C972554709300BA6A10 /* InTimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InTimeUITests.swift; sourceTree = "<group>"; };
 		8F7C8C992554709300BA6A10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F7C8D652559D90600EE0DDA /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
-		8F8419D92893F603003EF8FB /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		8FB964C528AD227D0043265C /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		9320280E49646D0FDA95FCE8 /* Pods-InTime-InTimeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InTime-InTimeUITests.debug.xcconfig"; path = "Target Support Files/Pods-InTime-InTimeUITests/Pods-InTime-InTimeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		98D59A80793A91FC493E82C3 /* Pods-InTimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InTimeTests.debug.xcconfig"; path = "Target Support Files/Pods-InTimeTests/Pods-InTimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F81AF2E751EB3CFFE2777E3 /* Pods_InTime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InTime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,9 +179,9 @@
 		8F7C8D642559D84300EE0DDA /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8FB964C528AD227D0043265C /* HistoryViewController.swift */,
 				8F7C8D652559D90600EE0DDA /* RecordViewController.swift */,
 				8F0EFB31288C274F00002095 /* HistoryViewControllerFirstVersion.swift */,
-				8F8419D92893F603003EF8FB /* HistoryViewController.swift */,
 				8F20364E289197FD00CAC940 /* HistoryView.swift */,
 			);
 			path = "View Controllers";
@@ -197,7 +197,6 @@
 				98D59A80793A91FC493E82C3 /* Pods-InTimeTests.debug.xcconfig */,
 				AFE85AEBD4CFBB46078E4228 /* Pods-InTimeTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -450,12 +449,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F0EFB30288C089700002095 /* SpeedResultModel.swift in Sources */,
-				8F8419DA2893F603003EF8FB /* HistoryViewController.swift in Sources */,
 				8F20364F289197FD00CAC940 /* HistoryView.swift in Sources */,
 				8F7C8C7D2554709200BA6A10 /* InTime.xcdatamodeld in Sources */,
 				8F7C8C732554709200BA6A10 /* AppDelegate.swift in Sources */,
 				8F0EFB32288C274F00002095 /* HistoryViewControllerFirstVersion.swift in Sources */,
 				8F7C8C752554709200BA6A10 /* SceneDelegate.swift in Sources */,
+				8FB964C628AD227D0043265C /* HistoryViewController.swift in Sources */,
 				8F1E1D582892B04F000F7229 /* Utils.swift in Sources */,
 				8F7C8D662559D90600EE0DDA /* RecordViewController.swift in Sources */,
 			);
